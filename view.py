@@ -14,14 +14,13 @@
 
 from tkinter import *
 from model import *
-
-
+import time
 
 root = Tk()
 canvas = Canvas(root, bg='white', width='800', height='600')
 canvas.pack()
 
-o = canvas.create_oval(80, 30, 140, 150, fill="blue")
+# o = canvas.create_oval(80, 30, 140, 150, fill="blue")
 
 def to_canvas_coords(canvas, x):
     h = canvas.winfo_reqheight()
@@ -33,16 +32,23 @@ def to_canvas_coords(canvas, x):
     
     return x
 
-def move_oval_to(o, u1, u2):
+def move_oval_to(canvas, o, u1, u2):
     u1 = to_canvas_coords(canvas, u1)
     u2 = to_canvas_coords(canvas, u2)
 
-    canvas.coords(o, u1.x, u2.x, u1.y, u2.y)
+    canvas.coords(o, u1.x, u1.y, u2.x, u2.y)
 
 def create_oval(canvas, particle):
-    pass
+    oval = canvas.create_oval(0, 0, 0, 0, fill='blue')
+    move_oval_to(canvas, oval, particle.position.x, particle.position.y)
+
+    return oval
 
 
+## Temporary test—remove for final submission! ##
+for n in range(5):
+  particle = Particle(0, Vec(n,n), Vec(0,0), 0.2)
+  create_oval(canvas, particle)
+  canvas.update()
+  time.sleep(1)
 
-
-# input()
