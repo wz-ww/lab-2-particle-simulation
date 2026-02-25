@@ -22,6 +22,8 @@ canvas.pack()
 
 # o = canvas.create_oval(80, 30, 140, 150, fill="blue")
 
+
+
 def to_canvas_coords(canvas, x):
     h = canvas.winfo_reqheight()
     w = canvas.winfo_reqwidth()
@@ -32,6 +34,7 @@ def to_canvas_coords(canvas, x):
     
     return x
 
+
 def move_oval_to(canvas, o, u1, u2):
     u1 = to_canvas_coords(canvas, u1)
     u2 = to_canvas_coords(canvas, u2)
@@ -40,15 +43,32 @@ def move_oval_to(canvas, o, u1, u2):
 
 def create_oval(canvas, particle):
     oval = canvas.create_oval(0, 0, 0, 0, fill='blue')
-    move_oval_to(canvas, oval, particle.position.x, particle.position.y)
+    move_oval_to(canvas, oval, particle.bounding_box()[0], particle.bounding_box()[1])
 
     return oval
 
 
-## Temporary test—remove for final submission! ##
-for n in range(5):
-  particle = Particle(0, Vec(n,n), Vec(0,0), 0.2)
-  create_oval(canvas, particle)
-  canvas.update()
-  time.sleep(1)
+# Temporary test—remove for final submission! ##
+# for n in range(5):
+#   particle = Particle(0, Vec(n,n), Vec(0,0), 0.2)
+#   create_oval(canvas, particle)
+#   canvas.update()
+#   time.sleep(1)
 
+def simulation_loop(constant_gravitational_field, timestep, particles):
+    objects = []
+    for particle in particles:
+        object = create_oval(canvas, particle)
+        objects.append(object)
+
+    
+    while True:
+        constant_gravitational_field(timestep, particles, g=10)
+
+        for oval, particle in zip(objects, particles):
+            particle.inertial_move(timestep)
+            move_oval_to(canvas, oval, particle.bounding_box()[0], particle.bounding_box()[1])
+            
+        canvas.update()
+        time.sleep(timestep)
+            
