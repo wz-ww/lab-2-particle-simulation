@@ -72,3 +72,8 @@ class Particle:
         
         return a, b
 
+def constant_gravitational_field(dt, particles, g=10):
+    for particle in particles:
+        f = g * particle.mass * Vec(0, -1)
+        particle.apply_force(dt, f)
+        

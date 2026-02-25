@@ -1,4 +1,5 @@
 from view import *
+from model import *
 import math
 
 n = 20
@@ -13,4 +14,4 @@ for i in range(n):
 def no_force(dt,particles):
     pass
 
-simulation_loop(no_force, 0.000005, particles)
+simulation_loop(constant_gravitational_field, 0.000005, particles)
