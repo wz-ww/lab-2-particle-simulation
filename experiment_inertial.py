@@ -2,6 +2,8 @@ from view import *
 from model import *
 import math
 
+# tests gravitational field with constant downward force
+
 n = 20
 particles = []
 for i in range(n):
