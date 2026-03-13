@@ -24,7 +24,7 @@ class Vec:
         return (self.x, self.y)
     
 def dot(u, v):
-    return u.x * v.x + u.y * v.y
+    return u.get_coords()[0] * v.get_coords()[0] + u.get_coords()[1] * v.get_coords()[1]
 
 class Particle:
     def __init__(self, mass, position, velocity, radius):
@@ -40,8 +40,8 @@ class Particle:
         self.velocity += dt * (1 / self.mass) * f
 
     def bounding_box(self):
-        a = Vec(self.position.x - self.radius, self.position.y + self.radius)
-        b = Vec(self.position.x + self.radius, self.position.y - self.radius)
+        a = Vec(self.position.get_coords()[0] - self.radius, self.position.get_coords()[1] + self.radius)
+        b = Vec(self.position.get_coords()[0] + self.radius, self.position.get_coords()[1] - self.radius)
         
         return a, b
 
@@ -49,3 +49,6 @@ def constant_gravitational_field(dt, particles, g=10):
     for particle in particles:
         f = g * particle.mass * Vec(0, -1)
         particle.apply_force(dt, f)
+
+
+
